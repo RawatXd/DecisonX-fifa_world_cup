@@ -1,0 +1,28 @@
+FIFA WC Optimizer — XGBoost Model Report
+=============================================
+Test years   : [2018, 2022]
+Features     : 20
+Accuracy     : 49.2%
+Log loss     : 1.0260
+
+Features used:
+  home_elo_before
+  away_elo_before
+  elo_diff
+  home_form_3
+  away_form_3
+  home_gf_3
+  away_gf_3
+  home_ga_3
+  away_ga_3
+  home_gd_3
+  away_gd_3
+  home_form_5
+  away_form_5
+  home_gf_5
+  away_gf_5
+  home_ga_5
+  away_ga_5
+  home_gd_5
+  away_gd_5
+  stage_code

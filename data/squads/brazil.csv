@@ -1,0 +1,24 @@
+player_name,position,club,market_value_millions,injured
+Neymar,FWD,PSG,80,false
+Vinícius Júnior,FWD,Real Madrid,85,false
+Rodrygo,FWD,Real Madrid,45,false
+Richarlison,FWD,Tottenham,50,false
+Bruno Guimarães,MID,Newcastle,50,false
+Lucas Paquetá,MID,West Ham,35,false
+Casemiro,MID,Manchester United,60,false
+Fred,MID,Manchester United,25,false
+Fabinho,MID,Liverpool,35,false
+Sergej Milinković-Savić,MID,Lazio,50,false
+Thiago Silva,DEF,Chelsea,5,false
+Sergio Dest,DEF,Barcelona,30,false
+Danilo,DEF,Juventus,25,false
+Marquinhos,DEF,PSG,55,false
+Giorgian De Arrascaeta,MID,Flamengo,15,false
+Philippe Coutinho,MID,Aston Villa,15,false
+Gabriel,DEF,Arsenal,45,false
+Bremer,DEF,Juventus,40,false
+Ederson,GK,Manchester City,60,false
+Alisson,GK,Liverpool,50,false
+Lucas Moura,MID,Tottenham,20,false
+Anthony,FWD,Manchester United,50,false
+Antony,MID,Manchester United,50,false

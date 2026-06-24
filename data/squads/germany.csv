@@ -1,0 +1,24 @@
+player_name,position,club,market_value_millions,injured
+Manuel Neuer,GK,Bayern Munich,15,false
+Serge Gnabry,FWD,Bayern Munich,40,false
+Leroy Sané,MID,Bayern Munich,60,false
+Jamal Musiala,MID,Bayern Munich,70,false
+Thomas Müller,FWD,Bayern Munich,35,false
+Joshua Kimmich,MID,Bayern Munich,65,false
+Ilkay Gündoğan,MID,Manchester City,25,false
+Leon Goretzka,MID,Bayern Munich,45,false
+Antonio Rüdiger,DEF,Real Madrid,60,false
+Mats Hummels,DEF,Borussia Dortmund,10,false
+Niklas Süle,DEF,Borussia Dortmund,30,false
+Benjamin Henrichs,DEF,RB Leipzig,20,false
+David Raum,DEF,RB Leipzig,25,false
+Thilo Kehrer,DEF,West Ham,20,false
+Robin Gosens,DEF,FC Union Berlin,12,false
+Florian Wirtz,MID,Bayer Leverkusen,80,false
+Julian Draxler,MID,PSV Eindhoven,12,false
+Florian Neuhaus,MID,Borussia Mönchengladbach,30,false
+Serge Gnabry,FWD,Bayern Munich,40,false
+Karim Adeyemi,FWD,Borussia Dortmund,40,false
+Youssoufa Moukoko,FWD,Borussia Dortmund,35,false
+Kingsley Coman,FWD,Bayern Munich,80,false
+Emre Can,MID,Borussia Dortmund,25,false
