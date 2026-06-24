@@ -2,9 +2,10 @@
 src/dashboard/app.py
 --------------------
 DecisionX - FIFA World Cup Optimizer
-Phase 5 — Beautiful Interactive Dashboard
+Phase 5 — Fully Responsive Interactive Dashboard
 
 Premium decision-support platform combining ML and OR.
+Mobile-first, responsive design that works on all devices.
 
 Run with:
   streamlit run src/dashboard/app.py
@@ -35,217 +36,542 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS for beautiful styling
+
+# ═════════════════════════════════════════════════════════════════════════
+# FULLY RESPONSIVE CSS - MOBILE FIRST DESIGN
+# ═════════════════════════════════════════════════════════════════════════
+
 st.markdown("""
 <style>
-    /* Main theme colors */
+/* ─────────────────────────────────────────────────────────────── */
+/* GOOGLE FONTS & DESIGN TOKENS                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+:root {
+    /* Colors */
+    --primary: #1e40af;
+    --primary-dark: #1e3a8a;
+    --primary-light: #3b82f6;
+    --secondary: #0369a1;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f97316;
+    --info: #0ea5e9;
+    
+    /* Neutrals */
+    --bg-light: #f9fafb;
+    --bg-lighter: #f3f4f6;
+    --bg-dark: #111827;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    
+    /* Typography */
+    --font-family: 'Inter', sans-serif;
+    --font-display: 'Poppins', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* GLOBAL STYLES                                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: var(--font-family);
+    color: var(--text-dark);
+    background: var(--bg-light);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* STREAMLIT MAIN APP STYLING                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+.main {
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-lighter) 100%);
+    padding: var(--spacing-md);
+}
+
+.main .block-container {
+    padding: var(--spacing-md);
+    max-width: 100% !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* TYPOGRAPHY - RESPONSIVE                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 600;
+    color: var(--secondary);
+    margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+}
+
+p {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    line-height: 1.6;
+    color: var(--text-light);
+}
+
+.header-subtitle {
+    color: var(--text-light);
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    margin-bottom: var(--spacing-lg);
+    font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* CARDS - RESPONSIVE                                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+.card {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: clamp(1rem, 4vw, 2rem);
+    margin-bottom: var(--spacing-lg);
+    border-top: 4px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* STAT BOXES - RESPONSIVE                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+.stat-box {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    color: white;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: var(--radius-md);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-box-title {
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.stat-box-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* ALERT BOXES - RESPONSIVE                                        */
+/* ─────────────────────────────────────────────────────────────── */
+
+.info-box, .success-box, .warning-box {
+    border-radius: var(--radius-md);
+    padding: clamp(0.875rem, 2vw, 1rem);
+    margin: var(--spacing-md) 0;
+    font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+    border-left: 4px solid;
+    line-height: 1.6;
+}
+
+.info-box {
+    background: #eff6ff;
+    border-color: var(--info);
+    color: #0c4a6e;
+}
+
+.success-box {
+    background: #f0fdf4;
+    border-color: var(--success);
+    color: #165e4d;
+}
+
+.warning-box {
+    background: #fffbeb;
+    border-color: var(--warning);
+    color: #92400e;
+}
+
+.highlight-accent {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--warning) 100%);
+    color: white;
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0;
+}
+
+.highlight-accent h3 {
+    color: white;
+    margin-top: 0;
+}
+
+.highlight-accent p {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* SIDEBAR - RESPONSIVE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    color: white;
+}
+
+[data-testid="stSidebar"] * {
+    color: white !important;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, white, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* METRICS - RESPONSIVE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+[data-testid="stMetric"] {
+    background: white;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--primary-dark);
+    transition: all 0.3s ease;
+}
+
+[data-testid="stMetric"]:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+[data-testid="stMetric"] label {
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem) !important;
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: clamp(1.5rem, 4vw, 2rem) !important;
+    color: var(--primary-dark) !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stMetricDelta"] {
+    color: var(--success) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* BUTTONS - RESPONSIVE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+.stButton > button {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    color: white;
+    border: none;
+    padding: clamp(0.6rem, 1.5vw, 0.75rem) clamp(1rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    opacity: 0.95;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* SELECTBOX & INPUTS - RESPONSIVE                                 */
+/* ─────────────────────────────────────────────────────────────── */
+
+[data-testid="stSelectbox"] > div > div {
+    background: white !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    font-size: clamp(0.875rem, 1.5vw, 1rem) !important;
+}
+
+[data-testid="stMultiSelect"] > div > div {
+    background: white !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* TABS - RESPONSIVE                                               */
+/* ─────────────────────────────────────────────────────────────── */
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: clamp(0.5rem, 2vw, 1rem);
+    flex-wrap: wrap;
+}
+
+.stTabs [data-baseweb="tab"] {
+    padding: clamp(0.6rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: clamp(0.825rem, 1.5vw, 0.95rem);
+    background: var(--bg-lighter);
+    color: var(--text-light);
+}
+
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    color: white;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* DATAFRAMES - RESPONSIVE                                         */
+/* ─────────────────────────────────────────────────────────────── */
+
+[data-testid="stDataFrame"] {
+    border-radius: var(--radius-md);
+    overflow: auto;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+}
+
+[data-testid="stDataFrame"] th {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem) !important;
+}
+
+[data-testid="stDataFrame"] tr:nth-child(even) {
+    background: var(--bg-lighter);
+}
+
+[data-testid="stDataFrame"] tr:hover {
+    background: #e0f2fe !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* DIVIDER - RESPONSIVE                                            */
+/* ─────────────────────────────────────────────────────────────── */
+
+hr {
+    border-color: var(--border-color) !important;
+    margin: var(--spacing-lg) 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* FOOTER                                                           */
+/* ─────────────────────────────────────────────────────────────── */
+
+.footer {
+    text-align: center;
+    padding: var(--spacing-lg);
+    color: var(--text-light);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-xl);
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+}
+
+.footer p {
+    margin: 0.5rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* PLOTLY CHARTS - RESPONSIVE                                      */
+/* ─────────────────────────────────────────────────────────────── */
+
+.plotly-graph-div {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* COLUMNS & LAYOUT - RESPONSIVE                                   */
+/* ─────────────────────────────────────────────────────────────── */
+
+[data-testid="stColumn"] {
+    transition: all 0.3s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* MOBILE RESPONSIVE (max-width: 640px)                             */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
     :root {
-        --primary: #1e3a8a;
-        --secondary: #0369a1;
-        --accent: #f59e0b;
-        --success: #10b981;
-        --danger: #ef4444;
-        --light: #f9fafb;
-        --dark: #111827;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
     }
 
-    /* Custom styling */
     .main {
-        background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-        padding-top: 2rem;
+        padding: var(--spacing-sm);
     }
 
-    .stMetric {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        border-left: 4px solid #1e3a8a;
-    }
-
-    .stMetric [data-testid="metricDeltaContainer"] {
-        color: #10b981;
+    .main .block-container {
+        padding: var(--spacing-sm) !important;
     }
 
     h1 {
-        color: #1e3a8a;
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin-bottom: 0.25rem;
     }
 
     h2 {
-        color: #1e3a8a;
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        border-bottom: 3px solid #f59e0b;
-        padding-bottom: 0.5rem;
-    }
-
-    h3 {
-        color: #0369a1;
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-top: 1.5rem;
-    }
-
-    .header-subtitle {
-        color: #666;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+        margin: var(--spacing-md) 0 var(--spacing-sm) 0;
     }
 
     .card {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-bottom: 1.5rem;
-        border-top: 4px solid #f59e0b;
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
     }
 
     .stat-box {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-    .stat-box-title {
-        font-size: 0.85rem;
-        opacity: 0.9;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-box-value {
-        font-size: 2rem;
-        font-weight: 800;
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
     }
 
     .highlight-accent {
-        background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1.5rem 0;
+        padding: var(--spacing-sm);
     }
 
-    .info-box {
-        background: #e0f2fe;
-        border-left: 4px solid #0369a1;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-        color: #0c4a6e;
-    }
-
-    .success-box {
-        background: #d1fae5;
-        border-left: 4px solid #10b981;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-        color: #065f46;
-    }
-
-    .dataframe {
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 1rem;
-    }
-
-    .stTabs [data-baseweb="tab"] {
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        color: #666;
-        background: #f3f4f6;
-    }
-
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
-        color: white;
-    }
-
-    .sidebar .sidebar-content {
-        background: linear-gradient(180deg, #1e3a8a 0%, #0369a1 100%);
-        color: white;
-    }
-
-    /* Selectbox and inputs */
-    .stSelectbox, .stMultiSelect {
-        margin-bottom: 1rem;
+    [data-testid="stMetric"] {
+        padding: var(--spacing-sm);
     }
 
     .stButton > button {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
-        color: white;
-        border: none;
-        padding: 0.75rem 2rem;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        width: 100% !important;
+        padding: 0.6rem 1rem !important;
     }
 
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 12px rgba(30, 58, 138, 0.3);
+    [data-testid="stDataFrame"] {
+        overflow-x: auto;
     }
 
-    /* Footer */
-    .footer {
-        text-align: center;
-        padding: 2rem;
-        color: #999;
-        border-top: 1px solid #e5e7eb;
-        margin-top: 3rem;
+    .stTabs [data-baseweb="tab"] {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* TABLET RESPONSIVE (641px - 1024px)                              */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .main {
+        padding: var(--spacing-md);
     }
 
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #1e3a8a 0%, #f59e0b 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .main .block-container {
+        padding: var(--spacing-md) !important;
     }
 
-    /* Charts */
-    .plotly-graph-div {
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    .card {
+        padding: var(--spacing-md);
     }
 
-    table {
-        border-radius: 8px;
-        overflow: hidden;
+    [data-testid="stMetric"] {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* LARGE DESKTOP (1024px+)                                          */
+/* ─────────────────────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+    .main {
+        padding: var(--spacing-lg);
     }
 
-    th {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%) !important;
-        color: white !important;
-        font-weight: 700 !important;
+    .main .block-container {
+        padding: var(--spacing-lg) !important;
+        max-width: 1400px;
+        margin: 0 auto;
     }
+}
 
-    tr:nth-child(even) {
-        background: #f9fafb;
-    }
+/* ─────────────────────────────────────────────────────────────── */
+/* UTILITY CLASSES                                                  */
+/* ─────────────────────────────────────────────────────────────── */
 
-    tr:hover {
-        background: #f0f9ff !important;
-    }
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: var(--spacing-md);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-md);
+}
+
+.gap-2 {
+    gap: var(--spacing-md);
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -256,21 +582,37 @@ st.markdown("""
 
 @st.cache_data
 def load_tournament_probs():
-    return pd.read_csv(cfg.OUTPUTS / "tournament_probs.csv")
+    try:
+        return pd.read_csv(cfg.OUTPUTS / "tournament_probs.csv")
+    except Exception as e:
+        st.error(f"Error loading tournament probabilities: {e}")
+        return None
 
 @st.cache_data
 def load_poisson_params():
-    return pd.read_csv(cfg.DATA_PROC / "poisson_params.csv")
+    try:
+        return pd.read_csv(cfg.DATA_PROC / "poisson_params.csv")
+    except Exception as e:
+        st.error(f"Error loading poisson params: {e}")
+        return None
 
 @st.cache_data
 def load_squad(team_name):
-    path = cfg.OUTPUTS.parent / "data" / "squads" / f"{team_name.lower()}.csv"
-    if not path.exists():
+    try:
+        path = cfg.OUTPUTS.parent / "data" / "squads" / f"{team_name.lower()}.csv"
+        if not path.exists():
+            return None
+        return pd.read_csv(path)
+    except Exception:
         return None
-    return pd.read_csv(path)
 
 tournament_probs = load_tournament_probs()
 poisson_params = load_poisson_params()
+
+if tournament_probs is None or poisson_params is None:
+    st.error("❌ Unable to load required data files. Please ensure Phase 1-3 are complete.")
+    st.stop()
+
 avg_goals = poisson_params["avg_goals_baseline"].iloc[0]
 all_teams = sorted(tournament_probs["team"].unique())
 
@@ -279,42 +621,39 @@ all_teams = sorted(tournament_probs["team"].unique())
 # HEADER
 # ═════════════════════════════════════════════════════════════════════════
 
-col1, col2 = st.columns([1, 3])
+col1, col2 = st.columns([1, 8])
 with col1:
-    st.markdown("⚽")
+    st.markdown("<div style='font-size: clamp(2rem, 6vw, 3rem); text-align: center;'>⚽</div>", unsafe_allow_html=True)
 with col2:
     st.markdown("<h1>DecisionX</h1>", unsafe_allow_html=True)
-
-st.markdown("""
-<p class='header-subtitle'>🏆 FIFA World Cup Tournament Optimization System</p>
-<p style='color: #666; font-size: 0.95rem; margin-bottom: 2rem;'>
-Predict match outcomes • Simulate tournaments • Optimize lineups • Make data-driven decisions
-</p>
-""", unsafe_allow_html=True)
+    st.markdown("<p class='header-subtitle'>🏆 FIFA World Cup Tournament Optimization System</p>", unsafe_allow_html=True)
 
 st.divider()
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# SIDEBAR
+# SIDEBAR NAVIGATION
 # ═════════════════════════════════════════════════════════════════════════
 
-st.sidebar.markdown("""
-<div class='logo-text' style='text-align: center; margin-bottom: 2rem;'>
-⚽ DecisionX ⚽
-</div>
-""", unsafe_allow_html=True)
-
-st.sidebar.markdown("---")
-
-tab_choice = st.sidebar.radio(
-    "📊 Navigation",
-    ["🏠 Home", "🎯 Team Explorer", "🎲 Bracket Simulator", "⚔️ Head-to-Head", "👥 Lineup Builder", "ℹ️ About"],
-    label_visibility="visible"
-)
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("""
+with st.sidebar:
+    st.markdown("<div class='logo-text'>⚽ DecisionX</div>", unsafe_allow_html=True)
+    st.markdown("---")
+    
+    tab_choice = st.radio(
+        "📊 Navigation",
+        [
+            "🏠 Home",
+            "🎯 Team Explorer",
+            "🎲 Bracket Simulator",
+            "⚔️ Head-to-Head",
+            "👥 Lineup Builder",
+            "ℹ️ About"
+        ],
+        label_visibility="visible"
+    )
+    
+    st.markdown("---")
+    st.markdown("""
 ### 🔧 System Architecture
 
 **Phase 1:** Data Pipeline
@@ -330,12 +669,12 @@ st.sidebar.markdown("""
 - Integer Programming
 
 **Phase 5:** Dashboard
-- Interactive UI (You are here!)
+- Interactive UI ✅
 """)
-
-st.sidebar.markdown("---")
-st.sidebar.markdown(f"""
-<div style='text-align: center; font-size: 0.85rem; color: #999;'>
+    
+    st.markdown("---")
+    st.markdown(f"""
+<div style='text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.7);'>
 📅 Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}
 <br>
 ✅ Data fresh from Phase 1-4
@@ -344,19 +683,19 @@ st.sidebar.markdown(f"""
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: HOME
+# PAGE: HOME
 # ═════════════════════════════════════════════════════════════════════════
 
 if tab_choice == "🏠 Home":
+    st.markdown("<h2>Welcome to DecisionX</h2>", unsafe_allow_html=True)
     st.markdown("""
 <div class='card'>
-    <h2>Welcome to DecisionX</h2>
-    <p>A premium decision-support platform for FIFA World Cup analysis and optimization.</p>
+    <p>A premium decision-support platform for FIFA World Cup analysis and optimization. Combining machine learning, operations research, and simulation to provide data-driven insights.</p>
 </div>
 """, unsafe_allow_html=True)
 
+    # Key stats
     col1, col2, col3 = st.columns(3)
-
     with col1:
         st.markdown("""
 <div class='stat-box'>
@@ -364,7 +703,6 @@ if tab_choice == "🏠 Home":
     <div class='stat-box-value'>32</div>
 </div>
 """, unsafe_allow_html=True)
-
     with col2:
         st.markdown("""
 <div class='stat-box'>
@@ -372,7 +710,6 @@ if tab_choice == "🏠 Home":
     <div class='stat-box-value'>10K</div>
 </div>
 """, unsafe_allow_html=True)
-
     with col3:
         st.markdown("""
 <div class='stat-box'>
@@ -381,10 +718,13 @@ if tab_choice == "🏠 Home":
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.divider()
 
+    # Features overview
+    st.markdown("<h2>Platform Features</h2>", unsafe_allow_html=True)
+    
     col1, col2 = st.columns(2)
-
+    
     with col1:
         st.markdown("""
 <div class='card'>
@@ -393,7 +733,15 @@ if tab_choice == "🏠 Home":
     <p><strong>Use for:</strong> Understanding team strength and tournament path</p>
 </div>
 """, unsafe_allow_html=True)
-
+        
+        st.markdown("""
+<div class='card'>
+    <h3>🎲 Bracket Simulator</h3>
+    <p>View tournament brackets and aggregate probabilities from 10,000 simulated tournaments.</p>
+    <p><strong>Use for:</strong> Tournament structure understanding</p>
+</div>
+""", unsafe_allow_html=True)
+    
     with col2:
         st.markdown("""
 <div class='card'>
@@ -402,19 +750,7 @@ if tab_choice == "🏠 Home":
     <p><strong>Use for:</strong> Match betting, tactical analysis</p>
 </div>
 """, unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("""
-<div class='card'>
-    <h3>🎲 Bracket Simulator</h3>
-    <p>View tournament brackets and aggregate probabilities from 10,000 simulated tournaments.</p>
-    <p><strong>Use for:</strong> Tournament structure understanding</p>
-</div>
-""", unsafe_allow_html=True)
-
-    with col2:
+        
         st.markdown("""
 <div class='card'>
     <h3>👥 Lineup Builder</h3>
@@ -423,37 +759,39 @@ if tab_choice == "🏠 Home":
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.divider()
 
     st.markdown("""
 <div class='highlight-accent'>
-    <h3 style='color: white; margin-top: 0;'>🚀 Quick Start</h3>
-    <p style='color: white;'>1. Go to <strong>Team Explorer</strong> and select your team<br>
+    <h3>🚀 Quick Start</h3>
+    <p>1. Go to <strong>Team Explorer</strong> and select your team<br>
     2. Check <strong>Head-to-Head</strong> for specific match predictions<br>
     3. Use <strong>Lineup Builder</strong> to optimize your squad<br>
     4. Explore the <strong>Bracket Simulator</strong> to understand tournament dynamics</p>
 </div>
 """, unsafe_allow_html=True)
 
-    # Top 5 teams
-    st.markdown("### 🏆 Top 5 Teams by Win Probability")
-    top5 = tournament_probs.nlargest(5, "p_win")[["team", "p_win", "p_final", "p_qf"]].reset_index(drop=True)
-    top5.index = top5.index + 1
+    st.divider()
 
+    # Top 5 teams
+    st.markdown("<h2>🏆 Top 5 Teams by Win Probability</h2>", unsafe_allow_html=True)
+    top5 = tournament_probs.nlargest(5, "p_win")[["team", "p_win", "p_final", "p_qf"]].reset_index(drop=True)
+    
     for idx, (_, row) in enumerate(top5.iterrows(), 1):
-        col1, col2, col3, col4 = st.columns([1, 3, 2, 2])
+        col1, col2, col3, col4 = st.columns([0.5, 2, 1.5, 1.5])
         with col1:
-            st.markdown(f"### {idx}")
+            st.markdown(f"<h3 style='margin:0; color: var(--accent);'>{idx}</h3>", unsafe_allow_html=True)
         with col2:
-            st.markdown(f"### {row['team']}")
+            st.markdown(f"<h3 style='margin:0;'>{row['team']}</h3>", unsafe_allow_html=True)
         with col3:
-            st.markdown(f"<div class='stat-box' style='padding: 0.75rem;'><div class='stat-box-title'>Win %</div><div class='stat-box-value' style='font-size: 1.5rem;'>{row['p_win']:.1%}</div></div>", unsafe_allow_html=True)
+            st.metric("Win %", f"{row['p_win']:.1%}")
         with col4:
-            st.markdown(f"<div class='stat-box' style='padding: 0.75rem;'><div class='stat-box-title'>Final %</div><div class='stat-box-value' style='font-size: 1.5rem;'>{row['p_final']:.1%}</div></div>", unsafe_allow_html=True)
+            st.metric("Final %", f"{row['p_final']:.1%}")
+        st.divider()
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: TEAM EXPLORER
+# PAGE: TEAM EXPLORER
 # ═════════════════════════════════════════════════════════════════════════
 
 elif tab_choice == "🎯 Team Explorer":
@@ -464,22 +802,24 @@ elif tab_choice == "🎯 Team Explorer":
 
     if selected_team:
         row = tournament_probs[tournament_probs["team"] == selected_team].iloc[0]
+        rank = tournament_probs[tournament_probs["team"] == selected_team].index[0] + 1
 
-        # Key metrics
         st.markdown(f"<h3>{selected_team}</h3>", unsafe_allow_html=True)
 
+        # Key metrics
         col1, col2, col3, col4 = st.columns(4)
-
         with col1:
-            st.metric("🎯 Reach Group", f"{row['p_group']:.1%}", delta=None)
+            st.metric("Reach Group", f"{row['p_group']:.1%}")
         with col2:
-            st.metric("🔥 Reach QF", f"{row['p_qf']:.1%}", delta=None)
+            st.metric("Reach QF", f"{row['p_qf']:.1%}")
         with col3:
-            st.metric("⭐ Reach Final", f"{row['p_final']:.1%}", delta=None)
+            st.metric("Reach Final", f"{row['p_final']:.1%}")
         with col4:
-            st.metric("🏆 Win WC", f"{row['p_win']:.1%}", delta=None)
+            st.metric("Win WC", f"{row['p_win']:.1%}")
 
-        # Tournament path visualization
+        st.divider()
+
+        # Tournament path
         st.markdown("<h3>Tournament Path Probabilities</h3>", unsafe_allow_html=True)
 
         stages = ["Group", "R16", "QF", "SF", "Final", "Win"]
@@ -491,11 +831,12 @@ elif tab_choice == "🎯 Team Explorer":
                 y=probs,
                 marker=dict(
                     color=probs,
-                    colorscale='Viridis',
-                    showscale=True,
+                    colorscale=[[0, "#1e40af"], [0.5, "#0369a1"], [1.0, "#f59e0b"]],
+                    showscale=False,
                 ),
                 text=[f"{p:.1%}" for p in probs],
                 textposition="auto",
+                hovertemplate="<b>%{x}</b><br>Probability: %{y:.1%}<extra></extra>",
             )
         ])
 
@@ -503,19 +844,18 @@ elif tab_choice == "🎯 Team Explorer":
             title=f"{selected_team} — Tournament Stage Progression",
             xaxis_title="Tournament Stage",
             yaxis_title="Probability",
-            height=450,
+            height=400,
             showlegend=False,
             template="plotly_white",
-            font=dict(size=12),
-            plot_bgcolor='rgba(240, 240, 240, 0.5)',
+            hovermode="x unified",
         )
 
         st.plotly_chart(fig, use_container_width=True)
 
-        # Ranking
-        st.markdown("<h3>Global Rankings</h3>", unsafe_allow_html=True)
+        st.divider()
 
-        rank = tournament_probs[tournament_probs["team"] == selected_team].index[0] + 1
+        # Rankings
+        st.markdown("<h3>Global Rankings</h3>", unsafe_allow_html=True)
         st.markdown(f"<div class='info-box'><strong>{selected_team}</strong> is ranked <strong>#{rank}/32</strong> by win probability</div>", unsafe_allow_html=True)
 
         col1, col2 = st.columns(2)
@@ -538,7 +878,7 @@ elif tab_choice == "🎯 Team Explorer":
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: BRACKET SIMULATOR
+# PAGE: BRACKET SIMULATOR
 # ═════════════════════════════════════════════════════════════════════════
 
 elif tab_choice == "🎲 Bracket Simulator":
@@ -553,16 +893,13 @@ elif tab_choice == "🎲 Bracket Simulator":
 
     # Summary stats
     col1, col2, col3 = st.columns(3)
-
     with col1:
         avg_win_prob = tournament_probs["p_win"].mean()
         st.metric("Avg Win %", f"{avg_win_prob:.2%}")
-
     with col2:
         max_win_prob = tournament_probs["p_win"].max()
         max_team = tournament_probs.loc[tournament_probs["p_win"].idxmax(), "team"]
         st.metric(f"Favorite ({max_team})", f"{max_win_prob:.2%}")
-
     with col3:
         median_final = tournament_probs["p_final"].median()
         st.metric("Median Final %", f"{median_final:.2%}")
@@ -573,8 +910,7 @@ elif tab_choice == "🎲 Bracket Simulator":
     st.markdown("<h3>Complete Tournament Probabilities</h3>", unsafe_allow_html=True)
 
     display_cols = ["team", "p_group", "p_r16", "p_qf", "p_sf", "p_final", "p_win"]
-    display_df = tournament_probs[display_cols].copy()
-    display_df = display_df.reset_index(drop=True)
+    display_df = tournament_probs[display_cols].copy().reset_index(drop=True)
     display_df.index = display_df.index + 1
     display_df.columns = ["Team", "Group", "R16", "QF", "SF", "Final", "Win"]
 
@@ -595,13 +931,14 @@ elif tab_choice == "🎲 Bracket Simulator":
             x="p_win",
             nbins=15,
             labels={"p_win": "Win Probability"},
-            color_discrete_sequence=["#1e3a8a"],
+            color_discrete_sequence=["#1e40af"],
+            title="",
         )
         fig.update_layout(
-            height=400,
+            height=350,
             showlegend=False,
             template="plotly_white",
-            plot_bgcolor='rgba(240, 240, 240, 0.5)',
+            hovermode="x unified",
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -613,18 +950,19 @@ elif tab_choice == "🎲 Bracket Simulator":
             nbins=15,
             labels={"p_final": "Final Probability"},
             color_discrete_sequence=["#0369a1"],
+            title="",
         )
         fig.update_layout(
-            height=400,
+            height=350,
             showlegend=False,
             template="plotly_white",
-            plot_bgcolor='rgba(240, 240, 240, 0.5)',
+            hovermode="x unified",
         )
         st.plotly_chart(fig, use_container_width=True)
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: HEAD-TO-HEAD
+# PAGE: HEAD-TO-HEAD
 # ═════════════════════════════════════════════════════════════════════════
 
 elif tab_choice == "⚔️ Head-to-Head":
@@ -632,10 +970,8 @@ elif tab_choice == "⚔️ Head-to-Head":
     st.markdown("<p class='header-subtitle'>Poisson goal model predictions for any matchup</p>", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
-
     with col1:
         team_a = st.selectbox("Home Team:", all_teams, key="h2h_home", index=0)
-
     with col2:
         team_b = st.selectbox("Away Team:", [t for t in all_teams if t != team_a], key="h2h_away")
 
@@ -674,7 +1010,7 @@ elif tab_choice == "⚔️ Head-to-Head":
         # Expected goals
         st.markdown(f"""
 <div class='info-box'>
-    <strong>Expected Goals:</strong> {team_a} {result['lambda_home']:.2f} — {result['lambda_away']:.2f} {team_b}
+    <strong>Expected Goals:</strong> {team_a} <strong>{result['lambda_home']:.2f}</strong> — <strong>{result['lambda_away']:.2f}</strong> {team_b}
 </div>
 """, unsafe_allow_html=True)
 
@@ -683,16 +1019,17 @@ elif tab_choice == "⚔️ Head-to-Head":
         # Match outcome chart
         st.markdown("<h3>Match Outcome Probabilities</h3>", unsafe_allow_html=True)
 
-        outcomes = [team_a, "Draw", team_b]
+        outcomes = [f"{team_a} Win", "Draw", f"{team_b} Win"]
         probs = [result["p_home_win"], result["p_draw"], result["p_away_win"]]
 
         fig = go.Figure(data=[
             go.Pie(
                 labels=outcomes,
                 values=probs,
-                marker=dict(colors=["#1e3a8a", "#f59e0b", "#0369a1"]),
+                marker=dict(colors=["#1e40af", "#f59e0b", "#0369a1"]),
                 textposition="inside",
                 textinfo="label+percent",
+                hovertemplate="<b>%{label}</b><br>Probability: %{percent}<extra></extra>",
             )
         ])
 
@@ -723,7 +1060,7 @@ elif tab_choice == "⚔️ Head-to-Head":
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: LINEUP BUILDER
+# PAGE: LINEUP BUILDER
 # ═════════════════════════════════════════════════════════════════════════
 
 elif tab_choice == "👥 Lineup Builder":
@@ -774,7 +1111,7 @@ elif tab_choice == "👥 Lineup Builder":
 
 
 # ═════════════════════════════════════════════════════════════════════════
-# TAB: ABOUT
+# PAGE: ABOUT
 # ═════════════════════════════════════════════════════════════════════════
 
 elif tab_choice == "ℹ️ About":
@@ -792,15 +1129,15 @@ elif tab_choice == "ℹ️ About":
 <div class='card'>
     <h3>🏗️ Architecture</h3>
     <p><strong>Phase 1:</strong> Data Pipeline<br>
-    Load 964 historical matches, compute Elo ratings, engineer 30+ features<br><br>
-    <strong>Phase 2:</strong> Match Models<br>
-    Poisson goal model (61.7% accuracy) + XGBoost classifier (49.2% accuracy)<br><br>
-    <strong>Phase 3:</strong> Tournament Simulator<br>
-    Monte Carlo: 10,000 tournament runs<br><br>
-    <strong>Phase 4:</strong> Lineup Optimizer<br>
-    Integer Programming (PuLP) to maximize win probability<br><br>
-    <strong>Phase 5:</strong> Dashboard<br>
-    Interactive Streamlit web application</p>
+Load 964 historical matches, compute Elo ratings, engineer 30+ features<br><br>
+<strong>Phase 2:</strong> Match Models<br>
+Poisson goal model (61.7% accuracy) + XGBoost classifier (49.2% accuracy)<br><br>
+<strong>Phase 3:</strong> Tournament Simulator<br>
+Monte Carlo: 10,000 tournament runs<br><br>
+<strong>Phase 4:</strong> Lineup Optimizer<br>
+Integer Programming (PuLP) to maximize win probability<br><br>
+<strong>Phase 5:</strong> Dashboard<br>
+Interactive Streamlit web application ✅</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -833,8 +1170,8 @@ elif tab_choice == "ℹ️ About":
 
     st.markdown("""
 <div class='highlight-accent'>
-    <h3 style='color: white; margin-top: 0;'>🚀 How to Use DecisionX</h3>
-    <p style='color: white;'>
+    <h3>🚀 How to Use DecisionX</h3>
+    <p>
     <strong>1. Team Explorer:</strong> Pick a team → see tournament path probabilities<br>
     <strong>2. Head-to-Head:</strong> Compare two teams → get match prediction<br>
     <strong>3. Bracket Simulator:</strong> Understand probability distribution across 32 teams<br>
@@ -897,10 +1234,11 @@ elif tab_choice == "ℹ️ About":
     <p><strong>DecisionX — FIFA World Cup Optimizer</strong></p>
     <p>A portfolio project demonstrating Operations Research + Machine Learning</p>
     <p>📧 Portfolio | 🔗 GitHub | 📊 Documentation</p>
-    <p style='margin-top: 2rem; color: #ccc;'>Built with Python • Streamlit • Plotly • PuLP</p>
+    <p>Built with Python • Streamlit • Plotly • PuLP</p>
 </div>
 """, unsafe_allow_html=True)
 
 
-
-# END
+# ═════════════════════════════════════════════════════════════════════════
+# END OF APPLICATION
+# ═════════════════════════════════════════════════════════════════════════
