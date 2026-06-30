@@ -1,8 +1,6 @@
 # 🏆 DecisionX – FIFA World Cup Optimizer
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit-red?style=for-the-badge&logo=streamlit)](https://YOUR_STREAMLIT_LINK)
-
-👉 **[Live Demo Link](https://decisonx-fifaworldcup-dvhev9wpjvrw67zrg7fjdx.streamlit.app/)**
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit-red?style=for-the-badge&logo=streamlit)]((https://decisonx-fifaworldcup-dvhev9wpjvrw67zrg7fjdx.streamlit.app/))
 
 <p align="center">
   <img src="assests/World_cup.gif" alt="DecisionX Demo" width="100%">
