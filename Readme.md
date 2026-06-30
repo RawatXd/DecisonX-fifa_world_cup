@@ -2,7 +2,11 @@
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit-red?style=for-the-badge&logo=streamlit)](https://YOUR_STREAMLIT_LINK)
 
-👉 **[Live Demo Link](https://YOUR_STREAMLIT_LINK)**
+👉 **[Live Demo Link](https://decisonx-fifaworldcup-dvhev9wpjvrw67zrg7fjdx.streamlit.app/)**
+
+<p align="center">
+  <img src="assets/World_cup.gif" alt="DecisionX Demo" width="100%">
+</p>
 
 DecisionX is an end-to-end sports analytics and decision-support platform designed for FIFA World Cup tournament analysis. The project integrates Machine Learning, Monte Carlo Simulation, and Operations Research techniques to predict match outcomes, simulate thousands of tournament scenarios, and optimize squad selection strategies.
 
